@@ -1,0 +1,257 @@
+:root {
+            --bg-color: #F5EFE6;
+            --shadow-dark: #D3C9BC;
+            --shadow-light: #FFFFFF;
+            --yellow-warm: #FFC800;
+            --yellow-gold: #E6A100;
+            --olive-dark: #00bd2f;
+            --terracotta: #C86D51;
+            --cream-light: #FFFDF9;
+        }
+
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #4A4238;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .font-serif-romantic {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Neumorphic Outset Container */
+        .neu-card {
+            background: var(--bg-color);
+            box-shadow: 12px 12px 28px var(--shadow-dark), 
+                        -12px -12px 28px var(--shadow-light);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Neumorphic Inset Container */
+        .neu-inset {
+            background: var(--bg-color);
+            box-shadow: inset 6px 6px 14px var(--shadow-dark), 
+                        inset -6px -6px 14px var(--shadow-light);
+            border-radius: 20px;
+        }
+
+        /* Neumorphic Button */
+        .neu-btn {
+            background: var(--bg-color);
+            box-shadow: 8px 8px 18px var(--shadow-dark), 
+                        -8px -8px 18px var(--shadow-light);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .neu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 10px 10px 22px var(--shadow-dark), 
+                        -10px -10px 22px var(--shadow-light);
+        }
+
+        .neu-btn:active {
+            transform: translateY(1px);
+            box-shadow: inset 4px 4px 10px var(--shadow-dark), 
+                        inset -4px -4px 10px var(--shadow-light);
+        }
+
+        /* Pulsing Glow Animation */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(230, 161, 0, 0.3),
+                            8px 8px 18px var(--shadow-dark), 
+                            -8px -8px 18px var(--shadow-light);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(255, 200, 0, 0.7),
+                            12px 12px 24px var(--shadow-dark), 
+                            -12px -12px 24px var(--shadow-light);
+            }
+        }
+
+        .btn-glow {
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        /* Scroll Reveal Base */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.96);
+            filter: blur(8px);
+            transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* Special Ending Card Highlight */
+        .special-ending-card {
+            background: linear-gradient(135deg, #FFFDF9 0%, #F5EFE6 100%);
+            box-shadow: 0 15px 35px rgba(200, 109, 81, 0.15),
+                        12px 12px 30px var(--shadow-dark), 
+                        -12px -12px 30px var(--shadow-light);
+            border: 2px solid rgba(230, 161, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .special-ending-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,200,0,0.12) 0%, transparent 60%);
+            animation: rotateBg 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particles Layer */
+        #particlesCanvas, #trailCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Hide scrollbars elegantly */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D0C5B6;
+            border-radius: 10px;
+        }
+
+/* =========================================================
+   RESPONSIVE / COMPATIBILIDAD MULTIDISPOSITIVO
+   ========================================================= */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+img, canvas, svg {
+    max-width: 100%;
+}
+
+button {
+    font: inherit;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#bouquetCanvas,
+#gardenCanvas,
+#particlesCanvas,
+#trailCanvas {
+    display: block;
+}
+
+@media (max-width: 640px) {
+    body {
+        min-width: 0;
+    }
+
+    header {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    header .font-serif-romantic {
+        font-size: 0.98rem;
+    }
+
+    #soundToggle {
+        min-height: 42px;
+        padding: 8px 12px;
+    }
+
+    main {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    #tiltContainer {
+        aspect-ratio: 4 / 5;
+        min-height: 300px;
+        max-height: 500px;
+    }
+
+    .neu-card {
+        border-radius: 22px;
+    }
+
+    .neu-btn {
+        min-height: 44px;
+    }
+
+    .font-serif-romantic.text-xl {
+        font-size: 1.25rem;
+    }
+
+    .font-serif-romantic.text-2xl {
+        font-size: 1.5rem;
+    }
+
+    #gardenCanvas {
+        min-height: 256px;
+    }
+}
+
+@media (max-width: 380px) {
+    #soundLabel {
+        display: none;
+    }
+
+    #soundToggle {
+        width: 44px;
+        justify-content: center;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .font-serif-romantic.text-3xl {
+        font-size: 1.7rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+    }
+
+    .scroll-reveal {
+        transition: opacity 0.2s ease !important;
+        transform: none !important;
+        filter: none !important;
+    }
+}
