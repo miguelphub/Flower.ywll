@@ -1,273 +1,680 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Una Flor Amarilla | Experiencia Romántica</title>
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
 
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-yellow-200">
 
-    <!-- Música local: coloca floamr.mpeg dentro de ./song/ -->
+    <!-- =========================================================
+         MÚSICA
+         ========================================================= -->
+
     <audio id="backgroundMusic"
            preload="auto"
            loop
            playsinline
            webkit-playsinline>
+
         <source src="song/floamr.mpeg" type="audio/mpeg">
+
         Tu navegador no admite audio HTML5.
     </audio>
 
 
+    <!-- =========================================================
+         CANVAS
+         ========================================================= -->
+
     <canvas id="particlesCanvas"></canvas>
     <canvas id="trailCanvas"></canvas>
 
-    <div id="loadingOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#F5EFE6] transition-opacity duration-700">
+
+    <!-- =========================================================
+         PANTALLA DE CARGA
+         ========================================================= -->
+
+    <div id="loadingOverlay"
+         class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#F5EFE6] transition-opacity duration-700">
+
         <div class="neu-card p-8 md:p-12 flex flex-col items-center max-w-sm w-full text-center relative">
-            <!-- Animated Bee & Flower Loading Graphic -->
+
             <div class="relative w-32 h-32 mb-6 flex items-center justify-center">
-                <svg id="loadingFlowerSvg" class="w-24 h-24 transform transition-transform duration-500 hover:scale-105" viewBox="0 0 100 100">
+
+                <svg id="loadingFlowerSvg"
+                     class="w-24 h-24 transform transition-transform duration-500 hover:scale-105"
+                     viewBox="0 0 100 100">
+
                     <g id="loadingFlowerPetals"></g>
-                    <circle cx="50" cy="50" r="14" fill="#3D2314" stroke="#E6A100" stroke-width="2"/>
+
+                    <circle cx="50"
+                            cy="50"
+                            r="14"
+                            fill="#3D2314"
+                            stroke="#E6A100"
+                            stroke-width="2">
+                    </circle>
+
                 </svg>
-                <div id="loadingBee" class="absolute w-8 h-8 pointer-events-none transition-transform">
-                    <svg viewBox="0 0 40 40" class="w-full h-full drop-shadow">
-                        <!-- Bee Wings -->
-                        <ellipse cx="14" cy="12" rx="7" ry="4" fill="rgba(255,255,255,0.85)" transform="rotate(-30 14 12)"/>
-                        <ellipse cx="24" cy="12" rx="7" ry="4" fill="rgba(255,255,255,0.85)" transform="rotate(30 24 12)"/>
-                        <!-- Bee Body -->
-                        <ellipse cx="20" cy="22" rx="10" ry="13" fill="#FFC800" transform="rotate(90 20 22)"/>
-                        <!-- Stripes -->
-                        <path d="M 16 16 Q 20 18 24 16 M 14 22 Q 20 24 26 22 M 16 28 Q 20 30 24 28" stroke="#2B2118" stroke-width="2.5" fill="none"/>
-                        <!-- Head -->
-                        <circle cx="8" cy="22" r="4" fill="#2B2118"/>
-                        <!-- Stinger -->
-                        <polygon points="32,22 35,20 35,24" fill="#2B2118"/>
+
+                <div id="loadingBee"
+                     class="absolute w-8 h-8 pointer-events-none transition-transform">
+
+                    <svg viewBox="0 0 40 40"
+                         class="w-full h-full drop-shadow">
+
+                        <ellipse cx="14"
+                                 cy="12"
+                                 rx="7"
+                                 ry="4"
+                                 fill="rgba(255,255,255,0.85)"
+                                 transform="rotate(-30 14 12)">
+                        </ellipse>
+
+                        <ellipse cx="24"
+                                 cy="12"
+                                 rx="7"
+                                 ry="4"
+                                 fill="rgba(255,255,255,0.85)"
+                                 transform="rotate(30 24 12)">
+                        </ellipse>
+
+                        <ellipse cx="20"
+                                 cy="22"
+                                 rx="10"
+                                 ry="13"
+                                 fill="#FFC800"
+                                 transform="rotate(90 20 22)">
+                        </ellipse>
+
+                        <path d="M 16 16 Q 20 18 24 16
+                                 M 14 22 Q 20 24 26 22
+                                 M 16 28 Q 20 30 24 28"
+                              stroke="#2B2118"
+                              stroke-width="2.5"
+                              fill="none">
+                        </path>
+
+                        <circle cx="8"
+                                cy="22"
+                                r="4"
+                                fill="#2B2118">
+                        </circle>
+
+                        <polygon points="32,22 35,20 35,24"
+                                 fill="#2B2118">
+                        </polygon>
+
                     </svg>
+
                 </div>
+
             </div>
 
-            <h2 class="text-xl font-serif-romantic font-bold text-[#3A4B29] mb-2 tracking-wide">Una Flor Amarilla</h2>
-            <p id="loadingText" class="text-xs text-[#8A7A68] italic h-6 mb-6">Cultivando tus flores amarillas...</p>
 
-            <!-- Progress Bar Container -->
+            <h2 class="text-xl font-serif-romantic font-bold text-[#3A4B29] mb-2 tracking-wide">
+                Una Flor Amarilla
+            </h2>
+
+
+            <p id="loadingText"
+               class="text-xs text-[#8A7A68] italic h-6 mb-6">
+                Cultivando tus flores amarillas...
+            </p>
+
+
             <div class="w-full neu-inset p-1.5 h-5 flex items-center">
-                <div id="progressBar" class="h-full bg-gradient-to-r from-[#E6A100] to-[#FFC800] rounded-full w-0 transition-all duration-300 shadow-sm"></div>
+
+                <div id="progressBar"
+                     class="h-full bg-gradient-to-r from-[#E6A100] to-[#FFC800] rounded-full w-0 transition-all duration-300 shadow-sm">
+                </div>
+
             </div>
-            <span id="progressPercent" class="text-xs font-semibold text-[#6E6050] mt-2">0%</span>
+
+
+            <span id="progressPercent"
+                  class="text-xs font-semibold text-[#6E6050] mt-2">
+                0%
+            </span>
+
         </div>
+
     </div>
 
-    <header class="w-full py-4 px-6 fixed top-0 left-0 z-30 flex justify-between items-center backdrop-blur-md bg-[#F5EFE6]/70 border-b border-white/40">
-        <div class="flex items-center space-x-2">
-            <span class="text-xl">🌼</span>
-            <span class="font-serif-romantic font-bold text-lg text-[#3A4B29] tracking-wider">Pensé en Ti</span>
-        </div>
-        <button id="soundToggle" class="neu-btn px-3 py-1.5 text-xs font-medium text-[#5A4E40] flex items-center space-x-1">
-            <span id="soundIcon">🎵</span>
-            <span id="soundLabel">Música</span>
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header class="w-full py-4 px-6 fixed top-0 left-0 z-30 flex justify-end items-center backdrop-blur-md bg-[#F5EFE6]/70 border-b border-white/40">
+
+        <button id="soundToggle"
+                class="neu-btn px-3 py-1.5 text-xs font-medium text-[#5A4E40] flex items-center space-x-1"
+                aria-label="Activar o desactivar música"
+                aria-pressed="false">
+
+            <span id="soundIcon">
+                🔇
+            </span>
+
+            <span id="soundLabel">
+                Activar
+            </span>
+
         </button>
+
     </header>
 
-    <!-- INTRO OVERLAY SEQUENCE -->
-    <div id="introOverlay" class="fixed inset-0 z-40 flex items-center justify-center p-6 bg-[#F5EFE6]/95 backdrop-blur-md transition-all duration-1000">
+
+    <!-- =========================================================
+         INTRO
+         ========================================================= -->
+
+    <div id="introOverlay"
+         class="fixed inset-0 z-40 flex items-center justify-center p-6 bg-[#F5EFE6]/95 backdrop-blur-md transition-all duration-1000">
+
         <div class="neu-card p-8 md:p-12 max-w-md w-full text-center flex flex-col items-center relative overflow-hidden">
-            <!-- Step Messages -->
-            <div id="introStep1" class="intro-step transition-all duration-700">
+
+            <div id="introStep1"
+                 class="intro-step transition-all duration-700">
+
                 <p class="font-serif-romantic text-2xl md:text-3xl text-[#3A4B29] italic leading-relaxed">
                     "Hay algo que quiero darte..."
                 </p>
+
             </div>
-            <div id="introStep2" class="intro-step hidden opacity-0 transition-all duration-700">
+
+
+            <div id="introStep2"
+                 class="intro-step hidden opacity-0 transition-all duration-700">
+
                 <p class="font-serif-romantic text-2xl md:text-3xl text-[#C86D51] italic leading-relaxed">
                     "Pero antes..."
                 </p>
+
             </div>
-            <div id="introStep3" class="intro-step hidden opacity-0 transition-all duration-700 flex flex-col items-center">
+
+
+            <div id="introStep3"
+                 class="intro-step hidden opacity-0 transition-all duration-700 flex flex-col items-center">
+
                 <p class="font-serif-romantic text-2xl md:text-3xl text-[#3A4B29] font-semibold mb-8 leading-relaxed">
                     "Presiona para descubrirlo"
                 </p>
-                <button id="btnAbrir" class="neu-btn btn-glow px-10 py-4 text-base font-bold text-[#3A4B29] tracking-widest uppercase transition-transform active:scale-95 flex items-center space-x-3">
-                    <span>✨</span>
-                    <span>ABRIR</span>
-                    <span>✨</span>
+
+
+                <button id="btnAbrir"
+                        class="neu-btn btn-glow px-10 py-4 text-base font-bold text-[#3A4B29] tracking-widest uppercase transition-transform active:scale-95 flex items-center space-x-3">
+
+                    <span>
+                        ✨
+                    </span>
+
+                    <span>
+                        ABRIR
+                    </span>
+
+                    <span>
+                        ✨
+                    </span>
+
                 </button>
+
             </div>
+
         </div>
+
     </div>
 
+
+    <!-- =========================================================
+         CONTENIDO PRINCIPAL
+         ========================================================= -->
+
     <main class="pt-24 pb-16 px-4 md:px-8 max-w-7xl mx-auto w-full flex-grow">
-        <!-- Dual layout for desktop, stacked for mobile -->
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            
-            <!-- BOUQUET CONTAINER (Fixed on Desktop, Top on Mobile) -->
+
+
+            <!-- =====================================================
+                 RAMO
+                 ===================================================== -->
+
             <div class="lg:col-span-5 lg:sticky lg:top-28 flex flex-col items-center">
-                <div class="neu-card p-4 md:p-6 w-full flex flex-col items-center relative overflow-hidden" id="bouquetWrapper">
+
+                <div id="bouquetWrapper"
+                     class="neu-card p-4 md:p-6 w-full flex flex-col items-center relative overflow-hidden">
+
                     <div class="absolute top-3 left-4 text-xs font-medium text-[#8A7A68] tracking-widest uppercase bg-[#F5EFE6]/80 px-3 py-1 rounded-full border border-white/50 z-10 shadow-sm">
+
                         💛 Toca una flor
-                    </div>
-                    
-                    <!-- Bouquet Canvas with Tilt Effect -->
-                    <div class="w-full aspect-[4/5] max-h-[520px] relative flex items-center justify-center my-2 cursor-pointer touch-none" id="tiltContainer">
-                        <canvas id="bouquetCanvas" class="w-full h-full object-contain filter drop-shadow-lg transition-transform duration-200 ease-out"></canvas>
+
                     </div>
 
-                    <p class="text-xs text-[#7A6B5B] text-center mt-2 italic">
-                        10 Girasoles • 12 Tulipanes • 8 Gerberas en un abrazo floral
-                    </p>
+
+                    <div id="tiltContainer"
+                         class="w-full aspect-[4/5] max-h-[520px] relative flex items-center justify-center my-2 cursor-pointer touch-none">
+
+                        <canvas id="bouquetCanvas"
+                                class="w-full h-full object-contain filter drop-shadow-lg transition-transform duration-200 ease-out">
+                        </canvas>
+
+                    </div>
+
                 </div>
+
             </div>
 
-            <!-- POEM CARDS CONTAINER -->
-            <div class="lg:col-span-7 flex flex-col space-y-8 md:space-y-10" id="poemContainer">
-                
+
+            <!-- =====================================================
+                 POEMA
+                 ===================================================== -->
+
+            <div id="poemContainer"
+                 class="lg:col-span-7 flex flex-col space-y-8 md:space-y-10">
+
+
+                <!-- TÍTULO -->
+
                 <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <h1 class="font-serif-romantic text-3xl md:text-4xl font-bold text-[#3A4B29] mb-4 text-center">
+
+                    <h1 class="font-serif-romantic text-3xl md:text-4xl font-bold text-[#3A4B29] mb-6 text-center">
                         Una flor amarilla
                     </h1>
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        No quiero que una flor amarilla<br>
-                        sea solamente una costumbre,<br>
-                        ni un detalle que se entrega<br>
-                        porque todos lo hacen.
-                    </p>
-                </div>
 
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        No quiero que nazca de la obligación,<br>
-                        ni de la presión de una fecha,<br>
-                        ni de sentir que hay que regalar algo<br>
-                        para demostrar lo que se siente.
-                    </p>
-                </div>
 
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Porque una flor solo tiene sentido<br>
-                        cuando nace de alguien que quiso darla,<br>
-                        cuando entre tantas cosas del mundo<br>
-                        alguien pensó en ti<br>
-                        y decidió regalarte un pequeño pedazo de su corazón.
-                    </p>
-                </div>
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
 
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Puede ser una sola flor,<br>
-                        quizá sencilla, quizá imperfecta,<br>
-                        pero si fue entregada con sinceridad,<br>
-                        vale mucho más que un ramo entero<br>
-                        dado sin sentimiento.
-                    </p>
-                </div>
-
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Porque no es la flor lo que importa,<br>
-                        sino el pensamiento detrás de ella:<br>
-                        <span class="font-semibold text-[#C86D51]">“La vi y pensé en ti.”</span>
-                    </p>
-                </div>
-
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Y quizá eso sea lo más bonito<br>
-                        de regalar una flor amarilla:<br>
-                        no que sea amarilla,<br>
-                        sino que por un instante<br>
-                        alguien quiso llevar un poco de luz<br>
-                        hasta las manos de otra persona.
-                    </p>
-                </div>
-
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Así que nunca menosprecies un pequeño detalle.<br>
-                        A veces una flor parece poca cosa,<br>
-                        pero puede guardar dentro de sus pétalos<br>
-                        un cariño que no supo decirse con palabras.
-                    </p>
-                </div>
-
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Porque las flores se marchitan,<br>
-                        los días pasan<br>
-                        y las modas terminan,<br>
-                        pero cuando un detalle nace del corazón,<br>
-                        su significado puede quedarse para siempre.
-                    </p>
-                </div>
-
-                <div class="neu-card p-6 md:p-8 scroll-reveal">
-                    <p class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center italic">
-                        Y quizá por eso<br>
-                        una flor amarilla en tu cabello<br>
-                        no sea solamente una flor.<br>
-                        Quizá sea la manera más sencilla<br>
-                        de decirte:
-                    </p>
-                </div>
-
-                <!-- HIGHLIGHTED CLOSING POEM CARD -->
-                <div class="special-ending-card p-8 md:p-12 rounded-3xl scroll-reveal text-center my-6">
-                    <div class="relative z-10">
-                        <span class="text-4xl mb-3 block">✨🌼✨</span>
-                        <p class="font-serif-romantic text-2xl md:text-4xl font-bold text-[#3A4B29] leading-snug tracking-wide">
-                            “Entre tantas personas,<br>
-                            hoy pensé en ti.”
+                        <p>
+                            No quiero que una flor amarilla
                         </p>
+
+                        <p>
+                            sea solamente una costumbre,
+                        </p>
+
+                        <p>
+                            ni un detalle que se entrega
+                        </p>
+
+                        <p>
+                            porque todos lo hacen.
+                        </p>
+
                     </div>
+
                 </div>
+
+
+                <!-- ESTROFA 2 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            No quiero que nazca de la obligación,
+                        </p>
+
+                        <p>
+                            ni de la presión de una fecha,
+                        </p>
+
+                        <p>
+                            ni de sentir que hay que regalar algo
+                        </p>
+
+                        <p>
+                            para demostrar lo que se siente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 3 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Porque una flor solo tiene sentido
+                        </p>
+
+                        <p>
+                            cuando nace de alguien que quiso darla,
+                        </p>
+
+                        <p>
+                            cuando entre tantas cosas del mundo
+                        </p>
+
+                        <p>
+                            alguien pensó en ti
+                        </p>
+
+                        <p>
+                            y decidió regalarte un pequeño pedazo de su corazón.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 4 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Puede ser una sola flor,
+                        </p>
+
+                        <p>
+                            quizá sencilla, quizá imperfecta,
+                        </p>
+
+                        <p>
+                            pero si fue entregada con sinceridad,
+                        </p>
+
+                        <p>
+                            vale mucho más que un ramo entero
+                        </p>
+
+                        <p>
+                            dado sin sentimiento.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 5 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Porque no es la flor lo que importa,
+                        </p>
+
+                        <p>
+                            sino el pensamiento detrás de ella:
+                        </p>
+
+
+                        <p class="italic mt-5 text-[#C86D51]">
+                            “La vi y pensé en ti.”
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 6 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Y quizá eso sea lo más bonito
+                        </p>
+
+                        <p>
+                            de regalar una flor amarilla:
+                        </p>
+
+                        <p>
+                            no que sea amarilla,
+                        </p>
+
+                        <p>
+                            sino que por un instante
+                        </p>
+
+                        <p>
+                            alguien quiso llevar un poco de luz
+                        </p>
+
+                        <p>
+                            hasta las manos de otra persona.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 7 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Así que nunca menosprecies un pequeño detalle.
+                        </p>
+
+                        <p>
+                            A veces una flor parece poca cosa,
+                        </p>
+
+                        <p>
+                            pero puede guardar dentro de sus pétalos
+                        </p>
+
+                        <p>
+                            un cariño que no supo decirse con palabras.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA 8 -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Porque las flores se marchitan,
+                        </p>
+
+                        <p>
+                            los días pasan
+                        </p>
+
+                        <p>
+                            y las modas terminan,
+                        </p>
+
+                        <p>
+                            pero cuando un detalle nace del corazón,
+                        </p>
+
+                        <p>
+                            su significado puede quedarse para siempre.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ESTROFA FINAL -->
+
+                <div class="neu-card p-6 md:p-8 scroll-reveal">
+
+                    <div class="font-serif-romantic text-xl md:text-2xl text-[#4A4238] leading-relaxed text-center">
+
+                        <p>
+                            Y quizá por eso
+                        </p>
+
+                        <p>
+                            una flor amarilla en tu cabello
+                        </p>
+
+                        <p>
+                            no sea solamente una flor.
+                        </p>
+
+                        <p>
+                            Quizá sea la manera más sencilla
+                        </p>
+
+                        <p>
+                            de decirte:
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FRASE FINAL
+                     ================================================= -->
+
+                <div class="special-ending-card p-8 md:p-12 rounded-3xl scroll-reveal text-center my-6">
+
+                    <div class="relative z-10">
+
+                        <span class="text-4xl mb-5 block">
+                            ✨🌼✨
+                        </span>
+
+
+                        <p class="font-serif-romantic text-2xl md:text-4xl font-bold text-[#3A4B29] leading-snug tracking-wide">
+
+                            <strong>
+                                “Entre tantas personas,
+                            </strong>
+
+                            <br>
+
+                            <strong>
+                                hoy pensé en ti.”
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
 
             </div>
+
         </div>
 
+
+        <!-- =========================================================
+             JARDÍN INTERACTIVO
+             ========================================================= -->
+
         <section class="mt-20 w-full">
+
             <div class="neu-card p-6 md:p-10 flex flex-col items-center relative overflow-hidden">
+
                 <div class="text-center mb-4">
+
                     <h2 class="font-serif-romantic text-2xl md:text-3xl font-bold text-[#3A4B29]">
                         El Jardín de las Flores Amarillas
                     </h2>
+
+
                     <p class="text-xs md:text-sm text-[#7A6B5B] mt-1">
                         🐝 Toca cualquier punto del jardín para hacer florecer una flor y guiar a las abejitas
                     </p>
+
                 </div>
 
-                <!-- Interactive Garden Canvas -->
+
                 <div class="w-full h-64 md:h-80 neu-inset relative overflow-hidden rounded-2xl cursor-crosshair">
-                    <canvas id="gardenCanvas" class="w-full h-full block"></canvas>
+
+                    <canvas id="gardenCanvas"
+                            class="w-full h-full block">
+                    </canvas>
+
                 </div>
+
             </div>
+
         </section>
+
+
+        <!-- =========================================================
+             REINICIO
+             ========================================================= -->
 
         <section class="mt-16 text-center max-w-2xl mx-auto px-4">
+
             <div class="neu-card p-8 md:p-10 flex flex-col items-center">
+
                 <p class="font-serif-romantic text-xl md:text-2xl text-[#3A4B29] italic leading-relaxed mb-8">
+
                     "Quizá una flor sea pequeña...<br>
                     pero nunca es pequeño el sentimiento con el que se entrega."
+
                 </p>
-                <button id="btnReset" class="neu-btn px-8 py-3.5 text-sm font-bold text-[#5A4E40] uppercase tracking-widest flex items-center space-x-2">
-                    <span>↺</span>
-                    <span>Volver a vivirlo</span>
+
+
+                <button id="btnReset"
+                        class="neu-btn px-8 py-3.5 text-sm font-bold text-[#5A4E40] uppercase tracking-widest flex items-center space-x-2">
+
+                    <span>
+                        ↺
+                    </span>
+
+                    <span>
+                        Volver a vivirlo
+                    </span>
+
                 </button>
+
             </div>
+
         </section>
+
     </main>
 
-    <!-- FOOTER -->
-    <footer class="w-full py-6 text-center text-xs text-[#8A7A68] border-t border-white/30 bg-[#F5EFE6]/80">
-        Hecho con corazón y código • Una Flor Amarilla 💛
-    </footer>
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
     <script src="script.js" defer></script>
+
 </body>
 </html>
+```
